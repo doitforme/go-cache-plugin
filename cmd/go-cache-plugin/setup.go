@@ -20,6 +20,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/creachadair/command"
 	"github.com/creachadair/gocache"
@@ -41,6 +42,10 @@ func initCacheServer(env *command.Env) (*gocache.Server, *s3util.Client, error) 
 		return nil, nil, env.Usagef("you must provide a --cache-dir")
 	case flags.S3Bucket == "":
 		return nil, nil, env.Usagef("you must provide an S3 --bucket name")
+	case flags.S3AccessKey == "":
+		return nil, nil, env.Usagef("you must provide a S3 --access-key")
+	case flags.S3SecretKey == "":
+		return nil, nil, env.Usagef("you must provide a S3 --secret-key")
 	}
 	region, err := getBucketRegion(env.Context(), flags.S3Bucket)
 	if err != nil {
@@ -59,6 +64,8 @@ func initCacheServer(env *command.Env) (*gocache.Server, *s3util.Client, error) 
 	if err != nil {
 		return nil, nil, fmt.Errorf("load AWS config: %w", err)
 	}
+
+	cfg.Credentials = credentials.NewStaticCredentialsProvider(flags.S3AccessKey, flags.S3SecretKey, "")
 
 	vprintf("local cache directory: %s", flags.CacheDir)
 	vprintf("S3 cache bucket %q (%s)", flags.S3Bucket, region)
