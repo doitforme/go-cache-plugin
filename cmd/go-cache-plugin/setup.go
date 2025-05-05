@@ -28,11 +28,11 @@ import (
 	"github.com/creachadair/mhttp/proxyconn"
 	"github.com/creachadair/taskgroup"
 	"github.com/creachadair/tlsutil"
+	"github.com/doitforme/go-cache-plugin/lib/gobuild"
+	"github.com/doitforme/go-cache-plugin/lib/modproxy"
+	"github.com/doitforme/go-cache-plugin/lib/revproxy"
+	"github.com/doitforme/go-cache-plugin/lib/s3util"
 	"github.com/goproxy/goproxy"
-	"github.com/tailscale/go-cache-plugin/lib/gobuild"
-	"github.com/tailscale/go-cache-plugin/lib/modproxy"
-	"github.com/tailscale/go-cache-plugin/lib/revproxy"
-	"github.com/tailscale/go-cache-plugin/lib/s3util"
 	"tailscale.com/tsweb"
 )
 
