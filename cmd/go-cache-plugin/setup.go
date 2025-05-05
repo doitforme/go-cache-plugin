@@ -66,6 +66,10 @@ func initCacheServer(env *command.Env) (*gocache.Server, *s3util.Client, error) 
 	}
 
 	cfg.Credentials = credentials.NewStaticCredentialsProvider(flags.S3AccessKey, flags.S3SecretKey, "")
+	if flags.S3BaseEndpont != "" {
+		cfg.BaseEndpoint = &flags.S3BaseEndpont
+		vprintf("S3 base endpoint: %s", *cfg.BaseEndpoint)
+	}
 
 	vprintf("local cache directory: %s", flags.CacheDir)
 	vprintf("S3 cache bucket %q (%s)", flags.S3Bucket, region)
